@@ -78,14 +78,20 @@ const userLogin = async (req, res = response ) => {
 
 }
 
-const revalidateToken = (req, res = response ) => {
-    const {name, email, password} = req.body;
+const revalidateToken = async (req, res = response ) => {
+    const {uid, name} = req;
+
+    //generate new jwt and return it
+    const token = await generateJwt(uid, name);
+
     res.json({
         ok: true,
-        msg: 'renew'
+        token
     })
 }
 
-
-
-module.exports = { createUser, userLogin, revalidateToken };
+module.exports = { 
+    createUser, 
+    userLogin, 
+    revalidateToken 
+};
