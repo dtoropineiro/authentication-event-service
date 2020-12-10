@@ -1,3 +1,5 @@
+'use strict'
+
 const { JsonWebTokenError } = require("jsonwebtoken");
 require('dotenv').config({path:'.env'});
 

@@ -1,3 +1,5 @@
+'use strict'
+
 const express = require('express');
 const { dbConnection } = require('./database/config');
 const cors = require('cors');

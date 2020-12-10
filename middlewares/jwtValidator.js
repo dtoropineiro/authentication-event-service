@@ -1,3 +1,5 @@
+'use strict'
+
 const { response } = require('express');
 const jwt = require('jsonwebtoken');
 
@@ -21,7 +23,7 @@ const validateJwt = (req, res = response, next) => {
 
         req.uid = uid;
         req.name = name;
-        
+
     }catch (error){
         return res.status(401).json({
             ok: false,
