@@ -2,14 +2,12 @@
 ==============================
 
 ## **Install**
-================
 
 ``` 
 npm install  
 ```
 
-**Set environment variables**
-================
+## **Set environment variables**
 
 > - PORT= port to run the app
 > - DB_PREFIX= prefix of mongodb url connection, like this: mongodb+srv://
@@ -20,7 +18,6 @@ npm install
 > - SECRET_JWT_SEED= jwt secret seed
 
 ## **Run**
-================
 
 ```
 npm run dev
