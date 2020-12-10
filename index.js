@@ -1,5 +1,6 @@
 const express = require('express');
 const { dbConnection } = require('./database/config');
+const cors = require('cors');
 require('dotenv').config({path:'.env'});
 
 const PORT = process.env.PORT;
@@ -9,6 +10,9 @@ const app = express();
 //db
 dbConnection()
 
+//CORS
+app.use(cors());
+
 //pulic dir
 app.use(express.static('public'));
 
@@ -16,8 +20,6 @@ app.use(express.static('public'));
 app.use(express.json());
 
 app.use('/api/auth', require('./routes/auth'));
-
-
 
 //listen requests
 app.listen( PORT, () => {
