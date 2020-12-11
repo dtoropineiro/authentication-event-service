@@ -19,7 +19,13 @@ router.post('/',
     ],
     createEvent);
 router.get('/', getEvents);
-router.put('/:id', updateEvent);
+router.put('/:id',    [
+    check('title', 'title required.').not().isEmpty(),
+    check('start', 'Invalid date.').custom(isDate),
+    check('end', 'Invalid date.').custom(isDate),
+    validateFields
+    ],
+    updateEvent);
 router.delete('/:id', deleteEvent);
 
 module.exports = router;
