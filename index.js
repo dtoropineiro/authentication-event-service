@@ -7,23 +7,32 @@ require('dotenv').config({path:'.env'});
 
 const PORT = process.env.PORT;
 // express server
-const app = express();
 
-//db
-dbConnection()
+const startServer = async () => {
+    const app = express();
 
-//CORS
-app.use(cors());
+    //db
+    await dbConnection();
+    
+    //CORS
+    app.use(cors());
+    
+    //pulic dir
+    app.use(express.static('public'));
+    
+    //read and body parsing
+    app.use(express.json());
+    
+    app.use('/api/auth', require('./routes/auth'));
+    
+    app.use('/api/events', require('./routes/events'));
+    
+    //listen requests
+    app.listen( PORT, () => {
+        console.log(`Server running on port ${4000}`);
+    });
 
-//pulic dir
-app.use(express.static('public'));
+}
 
-//read and body parsing
-app.use(express.json());
+startServer();
 
-app.use('/api/auth', require('./routes/auth'));
-
-//listen requests
-app.listen( PORT, () => {
-    console.log(`Server running on port ${4000}`);
-});
