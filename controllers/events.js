@@ -39,17 +39,16 @@ const updateEvent = async (req, res = response ) => {
         const event = await Event.findById(eventId);
 
         if(!event){
-            res.status(404).json({
+            return res.status(404).json({
                 ok: false,
                 msg: 'Event not found.',
             });
         }
         if(event.user.toString() !== uid){
-            res.status(401).json({
+            return res.status(401).json({
                 ok: false,
-                msg: 'Permission denied.',
+                msg: 'User does not have permission to update this event.',
             });
-            throw new Error('Permission denied.')
         }
          
         const newEvent = {
@@ -75,11 +74,38 @@ const updateEvent = async (req, res = response ) => {
 
 const deleteEvent = async (req, res = response ) => {
        
+    const eventId = req.params.id;
+    const uid = req.uid;
 
-    res.json({
-        ok: true,
-        msg: 'deleteEvent'
-    })
+    try{
+        const event = await Event.findById(eventId);
+
+        if(!event){
+            return res.status(404).json({
+                ok: false,
+                msg: 'Event not found.',
+            });
+        }
+        if(event.user.toString() !== uid){
+            return res.status(401).json({
+                ok: false,
+                msg: 'User does not have permission to delete this event.',
+            });
+        }
+         
+
+        const deletedEvent = await Event.findByIdAndDelete(eventId);
+
+        res.json({
+            ok: true,
+            msg: `Event with eventId ${eventId} deleted.`
+        })
+    }catch(error){
+        res.status(500).json({
+            ok: false,
+            msg: 'Error...',
+        });
+    }
 }
 
 module.exports = {
